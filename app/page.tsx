@@ -1,20 +1,23 @@
 import Link from "next/link";
 import {
   ArrowRight,
-  BarChart3,
+  Bell,
   CheckCircle2,
   Clock,
+  Download,
   Film,
+  LayoutDashboard,
   Link2,
   MousePointerClick,
   Play,
   Send,
-  Share2,
   ShieldCheck,
+  Smartphone,
   Sparkles,
   Star,
 } from "lucide-react";
 
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
 const NAV_LINKS = [
@@ -23,24 +26,26 @@ const NAV_LINKS = [
   { label: "Testimonials", href: "#testimonials" },
 ];
 
+const TRUSTED_BY = ["Northwind", "Vantage Legal", "Bramwell & Co.", "Solace Health", "Ledgerline", "Atlas Realty"];
+
 const STEPS = [
   {
     icon: Send,
     title: "Send a link",
     description:
-      "Drop your TrustClip link into an email, a text, or a post-purchase page. Setup takes minutes, not sprints.",
+      "Drop your custom TrustClip link into an email, a text message, or your offboarding flow.",
   },
   {
     icon: MousePointerClick,
-    title: "Customer taps record",
+    title: "Client taps record",
     description:
-      "It opens straight in their browser. No app to download, no account to create, no friction to abandon.",
+      "The link opens instantly in their mobile browser. No apps to download, and no account creation required.",
   },
   {
     icon: Film,
     title: "You get the video",
     description:
-      "A polished, ready-to-share testimonial lands in your dashboard, captioned and trimmed automatically.",
+      "As soon as they finish, the file lands in your dashboard, ready to download and share.",
   },
 ];
 
@@ -48,59 +53,66 @@ const FEATURES = [
   {
     icon: Link2,
     title: "One link, zero setup",
-    description:
-      "Share a single URL anywhere: email, SMS, or your checkout flow. No apps or logins for your customers.",
+    description: "Share a single, permanent URL anywhere. It just works.",
   },
   {
-    icon: ShieldCheck,
-    title: "Built-in moderation",
+    icon: Smartphone,
+    title: "Mobile-optimized",
     description:
-      "Review, approve, and organize every clip before it ever reaches your website or ads.",
-  },
-  {
-    icon: Sparkles,
-    title: "Auto captions & trimming",
-    description:
-      "TrustClip removes dead air, adds captions, and formats clips for social in seconds.",
-  },
-  {
-    icon: Share2,
-    title: "Embed anywhere",
-    description:
-      "Drop testimonials into landing pages, checkout, or ads with a single lightweight snippet.",
-  },
-  {
-    icon: BarChart3,
-    title: "Conversion analytics",
-    description:
-      "See exactly which clips drive signups and sales, then double down on what's working.",
+      "Designed to look native and beautiful on both iOS and Android browsers.",
   },
   {
     icon: Clock,
-    title: "Under 60 seconds",
+    title: "Time-boxed feedback",
     description:
-      "The average customer finishes recording in under a minute. Friction is the real churn.",
+      "We cap recordings at 60 seconds so clients don't ramble, giving you concise, impactful quotes.",
+  },
+  {
+    icon: Bell,
+    title: "Automatic delivery",
+    description:
+      "Get an instant email notification the second a client submits a new video.",
+  },
+  {
+    icon: Download,
+    title: "Own your content",
+    description:
+      "Download the raw .mp4 files in one click to use in your ads, social media, or website.",
+  },
+  {
+    icon: LayoutDashboard,
+    title: "Dead-simple dashboard",
+    description:
+      "No confusing timelines or editing suites. Just a clean inbox of your client success stories.",
   },
 ];
 
 const STATS = [
-  { value: "4.6x", label: "more responses than email asks" },
+  { value: "4.6x", label: "more responses than email requests" },
   { value: "92%", label: "recording completion rate" },
-  { value: "<60s", label: "average time to record" },
+  { value: "<60s", label: "average time for clients to record" },
 ];
 
 export default function Home() {
   return (
-    <div className="flex-1 bg-zinc-950 text-zinc-50">
+    <div className="flex-1 bg-slate-950 text-slate-50">
       <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-        <div className="absolute left-1/2 top-[-10%] h-[36rem] w-[64rem] -translate-x-1/2 rounded-full bg-violet-600/20 blur-[120px]" />
-        <div className="absolute bottom-[-20%] right-[-10%] h-[30rem] w-[30rem] rounded-full bg-fuchsia-600/10 blur-[120px]" />
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage:
+              "linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)",
+            backgroundSize: "56px 56px",
+          }}
+        />
+        <div className="absolute left-1/2 top-[-12%] h-[38rem] w-[68rem] -translate-x-1/2 rounded-full bg-indigo-600/20 blur-[130px]" />
+        <div className="absolute bottom-[-25%] right-[-10%] h-[32rem] w-[32rem] rounded-full bg-blue-600/10 blur-[130px]" />
       </div>
 
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-zinc-950/80 backdrop-blur-md">
-        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
+      <header className="sticky top-0 z-50 border-b border-white/10 bg-slate-950/80 backdrop-blur-md">
+        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
           <Link href="/" className="flex items-center gap-2">
-            <span className="relative flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-fuchsia-500">
+            <span className="relative flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-blue-500">
               <span className="h-2 w-2 rounded-full bg-white" />
             </span>
             <span className="text-base font-semibold tracking-tight">
@@ -113,55 +125,61 @@ export default function Home() {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-sm text-zinc-400 transition-colors hover:text-zinc-50"
+                className="text-sm text-slate-400 transition-colors hover:text-slate-50"
               >
                 {link.label}
               </a>
             ))}
           </nav>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <Button
               variant="ghost"
               size="sm"
-              className="hidden text-zinc-300 hover:text-zinc-50 sm:inline-flex"
+              className="hidden text-slate-300 hover:bg-white/5 hover:text-slate-50 sm:inline-flex"
+              asChild
             >
-              Log in
+              <Link href="/login">Log in</Link>
             </Button>
-            <Button size="sm">Get Started Free</Button>
+            <Button size="sm" asChild>
+              <Link href="/login?tab=signup">Get Started Free</Link>
+            </Button>
           </div>
         </div>
       </header>
 
       <main>
-        <section className="relative overflow-hidden px-6 pb-24 pt-20 sm:pt-28 lg:pt-32">
+        <section className="relative overflow-hidden px-4 pb-20 pt-16 sm:px-6 sm:pb-28 sm:pt-24 lg:pt-32">
           <div className="mx-auto max-w-3xl text-center">
-            <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm text-zinc-300">
-              <Sparkles className="size-3.5 text-fuchsia-400" />
+            <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm text-slate-300">
+              <Sparkles className="size-3.5 text-indigo-400" />
               No apps. No logins. Just tap and record.
             </div>
 
-            <h1 className="text-balance text-5xl font-semibold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
+            <h1 className="text-balance text-4xl font-semibold leading-[1.1] tracking-tight sm:text-6xl lg:text-7xl">
               Collect Video Testimonials{" "}
-              <span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-orange-300 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-indigo-400 via-blue-400 to-cyan-300 bg-clip-text text-transparent">
                 With Zero Friction
               </span>
             </h1>
 
-            <p className="mx-auto mt-6 max-w-xl text-pretty text-lg leading-8 text-zinc-400 sm:text-xl">
-              Send a link. Your customer taps record. You get a
-              high-converting video. No apps or logins required.
+            <p className="mx-auto mt-6 max-w-xl text-pretty text-base leading-7 text-slate-400 sm:text-lg sm:leading-8 lg:text-xl">
+              Send a secure link. Your client taps record. You receive a
+              high-converting video. The easiest way to gather social proof
+              without inconveniencing your clients.
             </p>
 
-            <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <Button size="lg" className="w-full px-8 text-base sm:w-auto">
-                Get Started Free
-                <ArrowRight className="size-4" />
+            <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
+              <Button size="lg" className="w-full px-8 text-base sm:w-auto" asChild>
+                <Link href="/login?tab=signup">
+                  Get Started Free
+                  <ArrowRight className="size-4" />
+                </Link>
               </Button>
               <Button
                 variant="outline"
                 size="lg"
-                className="w-full border-white/15 bg-transparent px-8 text-base text-zinc-100 hover:bg-white/5 sm:w-auto"
+                className="w-full border-white/15 bg-transparent px-8 text-base text-slate-100 hover:bg-white/5 sm:w-auto"
                 asChild
               >
                 <a href="#how-it-works">
@@ -171,41 +189,41 @@ export default function Home() {
               </Button>
             </div>
 
-            <p className="mt-6 text-sm text-zinc-500">
+            <p className="mt-6 text-sm text-slate-500">
               No credit card required &middot; Free forever plan &middot; Setup in 5 minutes
             </p>
           </div>
 
-          <div className="relative mx-auto mt-20 max-w-4xl">
+          <div className="relative mx-auto mt-16 max-w-4xl sm:mt-20">
             <div className="relative rounded-2xl border border-white/10 bg-white/[0.03] p-3 shadow-2xl shadow-black/50 sm:p-4">
               <div className="flex items-center gap-1.5 border-b border-white/10 px-2 pb-3">
-                <span className="size-2.5 rounded-full bg-zinc-700" />
-                <span className="size-2.5 rounded-full bg-zinc-700" />
-                <span className="size-2.5 rounded-full bg-zinc-700" />
-                <span className="ml-3 truncate rounded-md bg-white/5 px-3 py-1 text-xs text-zinc-500">
-                  trustclip.co/r/happy-customer-co
+                <span className="size-2.5 rounded-full bg-slate-700" />
+                <span className="size-2.5 rounded-full bg-slate-700" />
+                <span className="size-2.5 rounded-full bg-slate-700" />
+                <span className="ml-3 truncate rounded-md bg-white/5 px-3 py-1 text-xs text-slate-500">
+                  trustclip.co/happy-customer-co
                 </span>
               </div>
 
-              <div className="flex flex-col items-center justify-center gap-6 px-6 py-16 sm:py-20">
-                <p className="text-sm text-zinc-400">
+              <div className="flex flex-col items-center justify-center gap-6 px-6 py-14 sm:py-20">
+                <p className="text-sm text-slate-400">
                   Happy Customer Co. wants to hear from you
                 </p>
                 <button
                   type="button"
-                  className="group relative flex size-20 items-center justify-center rounded-full bg-gradient-to-br from-rose-500 to-red-600 shadow-lg shadow-red-500/30 transition-transform hover:scale-105"
+                  className="group relative flex size-20 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-blue-600 shadow-lg shadow-indigo-500/30 transition-transform hover:scale-105"
                 >
-                  <span className="absolute inset-0 animate-ping rounded-full bg-red-500/40" />
+                  <span className="absolute inset-0 animate-ping rounded-full bg-indigo-500/40" />
                   <span className="relative size-5 rounded-sm bg-white" />
                 </button>
-                <p className="text-sm font-medium text-zinc-200">
+                <p className="text-sm font-medium text-slate-200">
                   Tap to record your story
                 </p>
                 <div className="flex items-end gap-1">
                   {[6, 10, 16, 22, 14, 20, 9, 18, 12, 7].map((h, i) => (
                     <span
                       key={i}
-                      className="w-1 rounded-full bg-zinc-700"
+                      className="w-1 rounded-full bg-slate-700"
                       style={{ height: `${h}px` }}
                     />
                   ))}
@@ -213,70 +231,95 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="absolute -left-6 top-10 hidden w-48 rounded-xl border border-white/10 bg-zinc-900/90 p-4 shadow-xl backdrop-blur sm:block">
+            <div className="absolute -left-4 top-8 hidden w-48 rounded-xl border border-white/10 bg-slate-900/90 p-4 shadow-xl backdrop-blur sm:-left-6 sm:block">
               <div className="flex items-center gap-2 text-emerald-400">
                 <CheckCircle2 className="size-4" />
                 <span className="text-xs font-medium">Video received</span>
               </div>
-              <p className="mt-1 text-xs text-zinc-500">
+              <p className="mt-1 text-xs text-slate-500">
                 Captioned &amp; ready to publish
               </p>
             </div>
 
-            <div className="absolute -right-6 bottom-6 hidden w-48 rounded-xl border border-white/10 bg-zinc-900/90 p-4 shadow-xl backdrop-blur sm:block">
+            <div className="absolute -right-4 bottom-4 hidden w-48 rounded-xl border border-white/10 bg-slate-900/90 p-4 shadow-xl backdrop-blur sm:-right-6 sm:bottom-6 sm:block">
               <div className="flex items-center gap-1 text-amber-400">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <Star key={i} className="size-3.5 fill-current" />
                 ))}
               </div>
-              <p className="mt-1 text-xs text-zinc-500">
+              <p className="mt-1 text-xs text-slate-500">
                 &ldquo;Took me 40 seconds.&rdquo;
               </p>
             </div>
           </div>
         </section>
 
-        <section className="border-y border-white/10 bg-white/[0.02] px-6 py-12">
+        <section className="border-y border-white/10 px-4 py-10 sm:px-6">
+          <div className="mx-auto max-w-6xl">
+            <p className="text-center text-xs font-medium uppercase tracking-[0.2em] text-slate-500">
+              Trusted by service businesses and agencies everywhere
+            </p>
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-x-10 gap-y-4 opacity-70 grayscale">
+              {TRUSTED_BY.map((name) => (
+                <span
+                  key={name}
+                  className="text-sm font-semibold tracking-tight text-slate-400"
+                >
+                  {name}
+                </span>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="border-b border-white/10 bg-white/[0.02] px-4 py-12 sm:px-6">
           <div className="mx-auto grid max-w-4xl grid-cols-1 gap-8 text-center sm:grid-cols-3">
             {STATS.map((stat) => (
               <div key={stat.label}>
-                <p className="text-3xl font-semibold tracking-tight text-zinc-50 sm:text-4xl">
+                <p className="text-3xl font-semibold tracking-tight text-slate-50 sm:text-4xl">
                   {stat.value}
                 </p>
-                <p className="mt-2 text-sm text-zinc-500">{stat.label}</p>
+                <p className="mt-2 text-sm text-slate-500">{stat.label}</p>
               </div>
             ))}
           </div>
         </section>
 
-        <section id="how-it-works" className="px-6 py-24 sm:py-32">
+        <section id="how-it-works" className="px-4 py-20 sm:px-6 sm:py-28 lg:py-32">
           <div className="mx-auto max-w-6xl">
             <div className="mx-auto max-w-2xl text-center">
+              <Badge
+                variant="outline"
+                className="mx-auto mb-4 border-white/10 bg-white/5 text-slate-400"
+              >
+                How it works
+              </Badge>
               <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
                 Three steps. Zero friction.
               </h2>
-              <p className="mt-4 text-lg text-zinc-400">
-                Most testimonial tools lose customers at the sign-up wall.
-                TrustClip removes it entirely.
+              <p className="mt-4 text-base text-slate-400 sm:text-lg">
+                Most testimonial tools lose clients at the sign-up wall.
+                TrustClip removes it entirely so you get higher response
+                rates.
               </p>
             </div>
 
-            <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-3">
+            <div className="mt-14 grid grid-cols-1 gap-6 sm:mt-16 md:grid-cols-3 md:gap-8">
               {STEPS.map((step, index) => (
                 <div
                   key={step.title}
-                  className="relative rounded-2xl border border-white/10 bg-white/[0.03] p-8"
+                  className="relative rounded-2xl border border-white/10 bg-white/[0.03] p-7 transition-colors hover:bg-white/[0.05] sm:p-8"
                 >
-                  <span className="text-sm font-medium text-zinc-600">
+                  <span className="text-sm font-medium text-slate-600">
                     0{index + 1}
                   </span>
-                  <div className="mt-4 flex size-11 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20 text-violet-300">
+                  <div className="mt-4 flex size-11 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500/20 to-blue-500/20 text-indigo-300">
                     <step.icon className="size-5" />
                   </div>
-                  <h3 className="mt-5 text-lg font-semibold text-zinc-50">
+                  <h3 className="mt-5 text-lg font-semibold text-slate-50">
                     {step.title}
                   </h3>
-                  <p className="mt-2 text-sm leading-6 text-zinc-400">
+                  <p className="mt-2 text-sm leading-6 text-slate-400">
                     {step.description}
                   </p>
                 </div>
@@ -285,31 +328,37 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="features" className="px-6 py-24 sm:py-32">
+        <section id="features" className="border-t border-white/10 px-4 py-20 sm:px-6 sm:py-28 lg:py-32">
           <div className="mx-auto max-w-6xl">
             <div className="mx-auto max-w-2xl text-center">
+              <Badge
+                variant="outline"
+                className="mx-auto mb-4 border-white/10 bg-white/5 text-slate-400"
+              >
+                Built for busy teams
+              </Badge>
               <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-                Everything you need, nothing you don&apos;t
+                Everything you need, nothing you don&apos;t.
               </h2>
-              <p className="mt-4 text-lg text-zinc-400">
-                Built to turn happy customers into your best marketing asset,
+              <p className="mt-4 text-base text-slate-400 sm:text-lg">
+                Built to turn happy clients into your best marketing asset,
                 automatically.
               </p>
             </div>
 
-            <div className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-14 grid grid-cols-1 gap-5 sm:mt-16 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
               {FEATURES.map((feature) => (
                 <div
                   key={feature.title}
                   className="rounded-2xl border border-white/10 bg-white/[0.02] p-6 transition-colors hover:bg-white/[0.05]"
                 >
-                  <div className="flex size-10 items-center justify-center rounded-lg bg-white/5 text-zinc-300">
+                  <div className="flex size-10 items-center justify-center rounded-lg bg-white/5 text-slate-300">
                     <feature.icon className="size-5" />
                   </div>
-                  <h3 className="mt-4 text-base font-semibold text-zinc-50">
+                  <h3 className="mt-4 text-base font-semibold text-slate-50">
                     {feature.title}
                   </h3>
-                  <p className="mt-2 text-sm leading-6 text-zinc-400">
+                  <p className="mt-2 text-sm leading-6 text-slate-400">
                     {feature.description}
                   </p>
                 </div>
@@ -318,29 +367,30 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="testimonials" className="px-6 py-24 sm:py-32">
+        <section id="testimonials" className="border-t border-white/10 px-4 py-20 sm:px-6 sm:py-28 lg:py-32">
           <div className="mx-auto max-w-3xl">
-            <div className="rounded-3xl border border-white/10 bg-gradient-to-b from-white/[0.04] to-transparent p-10 text-center sm:p-14">
+            <div className="rounded-3xl border border-white/10 bg-gradient-to-b from-white/[0.04] to-transparent p-8 text-center sm:p-14">
               <div className="mb-6 flex justify-center gap-1 text-amber-400">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <Star key={i} className="size-5 fill-current" />
                 ))}
               </div>
-              <p className="text-balance text-2xl font-medium leading-tight text-zinc-100 sm:text-3xl">
-                &ldquo;We went from begging customers for reviews to
-                collecting a dozen video testimonials a week &mdash; without
-                lifting a finger.&rdquo;
+              <p className="text-balance text-xl font-medium leading-snug text-slate-100 sm:text-2xl sm:leading-tight lg:text-3xl">
+                &ldquo;We went from asking clients for reviews and getting
+                ignored, to collecting a dozen video testimonials a
+                month&mdash;without lifting a finger. The lack of friction is
+                incredible.&rdquo;
               </p>
               <div className="mt-8 flex items-center justify-center gap-3">
-                <span className="flex size-10 items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-500 text-sm font-semibold">
+                <span className="flex size-10 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-blue-500 text-sm font-semibold">
                   MC
                 </span>
                 <div className="text-left">
-                  <p className="text-sm font-medium text-zinc-100">
+                  <p className="text-sm font-medium text-slate-100">
                     Maya Chen
                   </p>
-                  <p className="text-xs text-zinc-500">
-                    Head of Growth, Loopwave
+                  <p className="text-xs text-slate-500">
+                    Founder, Loopwave
                   </p>
                 </div>
               </div>
@@ -348,24 +398,30 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="px-6 pb-24 sm:pb-32">
-          <div className="mx-auto max-w-5xl overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-violet-600/20 via-fuchsia-600/10 to-transparent px-8 py-16 text-center sm:px-16">
+        <section className="px-4 pb-20 sm:px-6 sm:pb-28 lg:pb-32">
+          <div className="mx-auto max-w-5xl overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-indigo-600/20 via-blue-600/10 to-transparent px-6 py-14 text-center sm:px-16 sm:py-16">
+            <div className="mx-auto mb-4 flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-1 text-xs font-medium text-slate-300">
+              <ShieldCheck className="size-3.5 text-indigo-400" />
+              Trusted, secure, and built to scale with your business
+            </div>
             <h2 className="text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
               Stop asking for reviews. Start collecting proof.
             </h2>
-            <p className="mx-auto mt-4 max-w-xl text-lg text-zinc-400">
+            <p className="mx-auto mt-4 max-w-xl text-base text-slate-400 sm:text-lg">
               Your first video testimonial is minutes away. No credit card,
               no commitment.
             </p>
-            <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <Button size="lg" className="w-full px-8 text-base sm:w-auto">
-                Get Started Free
-                <ArrowRight className="size-4" />
+            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
+              <Button size="lg" className="w-full px-8 text-base sm:w-auto" asChild>
+                <Link href="/login?tab=signup">
+                  Get Started Free
+                  <ArrowRight className="size-4" />
+                </Link>
               </Button>
               <Button
                 variant="outline"
                 size="lg"
-                className="w-full border-white/15 bg-transparent px-8 text-base text-zinc-100 hover:bg-white/5 sm:w-auto"
+                className="w-full border-white/15 bg-transparent px-8 text-base text-slate-100 hover:bg-white/5 sm:w-auto"
                 asChild
               >
                 <a href="#how-it-works">See How it Works</a>
@@ -375,19 +431,72 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="border-t border-white/10 px-6 py-10">
-        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 sm:flex-row">
-          <div className="flex items-center gap-2">
-            <span className="relative flex h-6 w-6 items-center justify-center rounded-md bg-gradient-to-br from-violet-500 to-fuchsia-500">
-              <span className="h-1.5 w-1.5 rounded-full bg-white" />
-            </span>
-            <span className="text-sm font-semibold text-zinc-300">
-              TrustClip
-            </span>
+      <footer className="border-t border-white/10 px-4 py-12 sm:px-6">
+        <div className="mx-auto flex max-w-6xl flex-col gap-10 sm:gap-12">
+          <div className="flex flex-col items-start justify-between gap-8 sm:flex-row">
+            <div className="max-w-xs">
+              <div className="flex items-center gap-2">
+                <span className="relative flex h-6 w-6 items-center justify-center rounded-md bg-gradient-to-br from-indigo-500 to-blue-500">
+                  <span className="h-1.5 w-1.5 rounded-full bg-white" />
+                </span>
+                <span className="text-sm font-semibold text-slate-300">
+                  TrustClip
+                </span>
+              </div>
+              <p className="mt-3 text-sm leading-6 text-slate-500">
+                The fastest way for service businesses to collect and own
+                their video testimonials.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 gap-8 sm:gap-16">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+                  Product
+                </p>
+                <div className="mt-3 flex flex-col gap-2.5">
+                  {NAV_LINKS.map((link) => (
+                    <a
+                      key={link.href}
+                      href={link.href}
+                      className="text-sm text-slate-400 transition-colors hover:text-slate-50"
+                    >
+                      {link.label}
+                    </a>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+                  Account
+                </p>
+                <div className="mt-3 flex flex-col gap-2.5">
+                  <Link
+                    href="/login"
+                    className="text-sm text-slate-400 transition-colors hover:text-slate-50"
+                  >
+                    Log in
+                  </Link>
+                  <Link
+                    href="/login?tab=signup"
+                    className="text-sm text-slate-400 transition-colors hover:text-slate-50"
+                  >
+                    Sign up
+                  </Link>
+                </div>
+              </div>
+            </div>
           </div>
-          <p className="text-sm text-zinc-500">
-            &copy; {new Date().getFullYear()} TrustClip. All rights reserved.
-          </p>
+
+          <div className="flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-6 sm:flex-row">
+            <p className="text-sm text-slate-500">
+              &copy; {new Date().getFullYear()} TrustClip. All rights reserved.
+            </p>
+            <p className="flex items-center gap-1.5 text-xs text-slate-600">
+              <ShieldCheck className="size-3.5" />
+              Your data is encrypted and never sold.
+            </p>
+          </div>
         </div>
       </footer>
     </div>

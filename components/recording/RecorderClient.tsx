@@ -13,11 +13,18 @@ import {
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 type CameraStatus = "requesting" | "ready" | "denied" | "error" | "unsupported";
 type RecordingPhase = "idle" | "recording" | "review" | "submitted";
 
 type CaptureSignal = { cancelled: boolean };
+
+type RecorderClientProps = {
+  businessId: string;
+  businessName: string;
+};
 
 const RECORDING_LIMIT_SECONDS = 60;
 
@@ -39,7 +46,7 @@ function formatTime(totalSeconds: number) {
   return `${minutes}:${String(seconds).padStart(2, "0")}`;
 }
 
-export default function RecordPage() {
+export function RecorderClient({ businessId, businessName }: RecorderClientProps) {
   const liveVideoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -54,6 +61,8 @@ export default function RecordPage() {
   const [timeLeft, setTimeLeft] = useState(RECORDING_LIMIT_SECONDS);
   const [recordedUrl, setRecordedUrl] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
+  const [customerName, setCustomerName] = useState("");
+  const [reviewerBusinessName, setReviewerBusinessName] = useState("");
 
   const stopStream = useCallback(() => {
     streamRef.current?.getTracks().forEach((track) => track.stop());
@@ -197,12 +206,34 @@ export default function RecordPage() {
     const blob = recordedBlobRef.current;
     if (!blob) return;
 
+    if (!customerName.trim()) {
+      alert("Please enter your name before submitting!");
+      return;
+    }
+
     setIsUploading(true);
 
+    const trimmedBusinessName = reviewerBusinessName.trim();
+    const finalName = trimmedBusinessName
+      ? `${customerName.trim()} | ${trimmedBusinessName}`
+      : customerName.trim();
+
     try {
-      const presignResponse = await fetch("/api/upload", { method: "POST" });
+      const presignResponse = await fetch("/api/upload", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contentType: blob.type,
+          fileSize: blob.size,
+          customerName: finalName,
+          businessId,
+        }),
+      });
       if (!presignResponse.ok) {
-        throw new Error("Failed to get upload URL.");
+        const { error: presignError } = await presignResponse
+          .json()
+          .catch(() => ({ error: null }));
+        throw new Error(presignError || "Failed to get upload URL.");
       }
       const { uploadUrl } = await presignResponse.json();
 
@@ -218,11 +249,15 @@ export default function RecordPage() {
       setPhase("submitted");
     } catch (error) {
       console.error("Failed to submit testimonial:", error);
-      alert("Something went wrong while uploading your testimonial. Please try again.");
+      const message =
+        error instanceof Error
+          ? error.message
+          : "Something went wrong while uploading your testimonial. Please try again.";
+      alert(message);
     } finally {
       setIsUploading(false);
     }
-  }, []);
+  }, [businessId, customerName, reviewerBusinessName]);
 
   const isCameraReady = cameraStatus === "ready";
   const showLiveFeed = isCameraReady && phase !== "review";
@@ -238,7 +273,7 @@ export default function RecordPage() {
 
       <div className="mt-8 text-center">
         <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
-          {phase === "submitted" ? "Thank you!" : "Record your testimonial"}
+          {phase === "submitted" ? "Thank you!" : `Record a testimonial for ${businessName}`}
         </h1>
         <p className="mt-2 max-w-xs text-sm text-zinc-400 sm:max-w-sm">
           {phase === "submitted"
@@ -248,6 +283,43 @@ export default function RecordPage() {
               : "Find a well-lit spot, tap start, and share your story in your own words."}
         </p>
       </div>
+
+      {phase === "review" && (
+        <div className="mt-6 flex w-full max-w-[380px] flex-col gap-4">
+          <div>
+            <Label htmlFor="customerName" className="text-zinc-300">
+              What is your name?
+            </Label>
+            <Input
+              id="customerName"
+              type="text"
+              autoComplete="name"
+              placeholder="Jane Doe"
+              value={customerName}
+              onChange={(event) => setCustomerName(event.target.value)}
+              className="mt-1.5 border-white/10 bg-white/5 text-zinc-50 placeholder:text-zinc-500 focus-visible:ring-violet-500/30"
+            />
+          </div>
+
+          <div>
+            <Label htmlFor="reviewerBusinessName" className="text-zinc-300">
+              Where do you work? <span className="text-zinc-500">(Optional)</span>
+            </Label>
+            <Input
+              id="reviewerBusinessName"
+              type="text"
+              autoComplete="organization"
+              placeholder="Acme Co."
+              value={reviewerBusinessName}
+              onChange={(event) => setReviewerBusinessName(event.target.value)}
+              className="mt-1.5 border-white/10 bg-white/5 text-zinc-50 placeholder:text-zinc-500 focus-visible:ring-violet-500/30"
+            />
+            <p className="mt-1.5 text-xs text-zinc-500">
+              Adding your company helps make this testimonial even more credible.
+            </p>
+          </div>
+        </div>
+      )}
 
       {phase === "submitted" ? (
         <div className="mx-auto mt-8 flex aspect-[9/16] w-full max-w-[380px] flex-col items-center justify-center gap-4 rounded-[2.5rem] border-8 border-zinc-800 bg-black shadow-2xl shadow-black/60">
