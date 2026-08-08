@@ -1,7 +1,6 @@
 "use client";
 
 import { Suspense, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
@@ -119,9 +118,8 @@ function LoginForm() {
         <div className="absolute bottom-[-20%] right-[-10%] h-[30rem] w-[30rem] rounded-full bg-blue-600/10 blur-[120px]" />
       </div>
 
-      <Link href="/" className="mb-8 flex items-center gap-2">
-        <Image src="/logo.png" alt="TrustClip" width={160} height={48} className="h-10 w-auto md:h-12" />
-        <span className="text-base font-semibold tracking-tight">TrustClip</span>
+      <Link href="/" className="mb-8 block text-center">
+        <span className="text-xl font-bold text-white tracking-tight">TrustClip</span>
       </Link>
 
       <Card className="w-full max-w-md rounded-3xl border border-white/10 bg-white/[0.03] shadow-none ring-0">
