@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -112,9 +113,7 @@ export default function Home() {
       <header className="sticky top-0 z-50 border-b border-white/10 bg-slate-950/80 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
           <Link href="/" className="flex items-center gap-2">
-            <span className="relative flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-blue-500">
-              <span className="h-2 w-2 rounded-full bg-white" />
-            </span>
+            <Image src="/logo.png" alt="TrustClip" width={32} height={32} className="h-8 w-auto" />
             <span className="text-base font-semibold tracking-tight">
               TrustClip
             </span>
@@ -195,27 +194,36 @@ export default function Home() {
           </div>
 
           <div className="relative mx-auto mt-16 max-w-4xl sm:mt-20">
-            <div className="relative rounded-2xl border border-white/10 bg-white/[0.03] p-3 shadow-2xl shadow-black/50 sm:p-4">
-              <div className="flex items-center gap-1.5 border-b border-white/10 px-2 pb-3">
-                <span className="size-2.5 rounded-full bg-slate-700" />
-                <span className="size-2.5 rounded-full bg-slate-700" />
-                <span className="size-2.5 rounded-full bg-slate-700" />
-                <span className="ml-3 truncate rounded-md bg-white/5 px-3 py-1 text-xs text-slate-500">
+            <div className="absolute inset-0 -z-10 rounded-[2rem] bg-gradient-to-br from-indigo-500/30 via-blue-500/10 to-transparent blur-2xl" />
+
+            <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] shadow-2xl shadow-black/60 backdrop-blur-2xl">
+              <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-white/[0.08] to-transparent" />
+
+              <div className="relative flex items-center gap-1.5 border-b border-white/10 px-4 py-3">
+                <span className="size-2.5 rounded-full bg-white/20" />
+                <span className="size-2.5 rounded-full bg-white/20" />
+                <span className="size-2.5 rounded-full bg-white/20" />
+                <span className="ml-3 truncate rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-400">
                   trustclip.co/happy-customer-co
                 </span>
               </div>
 
-              <div className="flex flex-col items-center justify-center gap-6 px-6 py-14 sm:py-20">
-                <p className="text-sm text-slate-400">
+              <div className="relative flex flex-col items-center justify-center gap-7 px-6 py-16 sm:py-24">
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-xs text-slate-300">
+                  <span className="size-1.5 rounded-full bg-emerald-400" />
                   Happy Customer Co. wants to hear from you
-                </p>
-                <button
-                  type="button"
-                  className="group relative flex size-20 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-blue-600 shadow-lg shadow-indigo-500/30 transition-transform hover:scale-105"
+                </span>
+
+                <Link
+                  href="/login"
+                  aria-label="Try recording a testimonial"
+                  className="group relative flex size-24 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-blue-600 shadow-xl shadow-indigo-500/40 transition-transform duration-300 hover:scale-105"
                 >
                   <span className="absolute inset-0 animate-ping rounded-full bg-indigo-500/40" />
-                  <span className="relative size-5 rounded-sm bg-white" />
-                </button>
+                  <span className="absolute -inset-3 animate-pulse rounded-full border border-indigo-400/20" />
+                  <span className="relative size-6 rounded-md bg-white shadow-inner" />
+                </Link>
+
                 <p className="text-sm font-medium text-slate-200">
                   Tap to record your story
                 </p>
@@ -223,7 +231,7 @@ export default function Home() {
                   {[6, 10, 16, 22, 14, 20, 9, 18, 12, 7].map((h, i) => (
                     <span
                       key={i}
-                      className="w-1 rounded-full bg-slate-700"
+                      className="w-1 rounded-full bg-white/15"
                       style={{ height: `${h}px` }}
                     />
                   ))}
@@ -231,7 +239,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="absolute -left-4 top-8 hidden w-48 rounded-xl border border-white/10 bg-slate-900/90 p-4 shadow-xl backdrop-blur sm:-left-6 sm:block">
+            <div className="absolute -left-4 top-8 hidden w-48 rounded-xl border border-white/10 bg-white/[0.06] p-4 shadow-xl backdrop-blur-xl sm:-left-6 sm:block">
               <div className="flex items-center gap-2 text-emerald-400">
                 <CheckCircle2 className="size-4" />
                 <span className="text-xs font-medium">Video received</span>
@@ -241,7 +249,7 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="absolute -right-4 bottom-4 hidden w-48 rounded-xl border border-white/10 bg-slate-900/90 p-4 shadow-xl backdrop-blur sm:-right-6 sm:bottom-6 sm:block">
+            <div className="absolute -right-4 bottom-4 hidden w-48 rounded-xl border border-white/10 bg-white/[0.06] p-4 shadow-xl backdrop-blur-xl sm:-right-6 sm:bottom-6 sm:block">
               <div className="flex items-center gap-1 text-amber-400">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <Star key={i} className="size-3.5 fill-current" />

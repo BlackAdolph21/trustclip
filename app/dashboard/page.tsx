@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { redirect } from "next/navigation";
 import { Film } from "lucide-react";
 
@@ -125,8 +126,8 @@ export default async function DashboardPage() {
 
   const testimonials = (videos ?? []) as VideoRow[];
 
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
-  const collectionLink = profile?.slug ? `${appUrl}/${profile.slug}` : null;
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+  const collectionLink = profile?.slug ? `${baseUrl}/${profile.slug}` : null;
 
   // Any lingering "New" or missing statuses from before the moderation
   // workflow existed are treated as Pending.
@@ -146,9 +147,7 @@ export default async function DashboardPage() {
       <header className="sticky top-0 z-10 border-b border-white/10 bg-slate-950/80 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
           <div className="flex items-center gap-2">
-            <span className="relative flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-blue-500">
-              <span className="h-2 w-2 rounded-full bg-white" />
-            </span>
+            <Image src="/logo.png" alt="TrustClip" width={32} height={32} className="h-8 w-auto" />
             <span className="text-base font-semibold tracking-tight">TrustClip</span>
           </div>
           <LogoutButton />

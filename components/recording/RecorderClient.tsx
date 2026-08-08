@@ -275,7 +275,7 @@ export function RecorderClient({ businessId, businessName }: RecorderClientProps
         <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
           {phase === "submitted" ? "Thank you!" : `Record a testimonial for ${businessName}`}
         </h1>
-        <p className="mt-2 max-w-xs text-sm text-zinc-400 sm:max-w-sm">
+        <p className="mx-auto mt-2 max-w-md text-center text-sm text-balance text-zinc-400">
           {phase === "submitted"
             ? "Your testimonial has been submitted successfully. We really appreciate it."
             : phase === "review"
