@@ -6,6 +6,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import {
   Building2,
   CircleAlert,
+  Eye,
+  EyeOff,
   Loader2,
   Lock,
   Mail,
@@ -39,6 +41,7 @@ function LoginForm() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showPassword, setShowPassword] = useState(false);
 
   const switchMode = (nextIsSignUp: boolean) => {
     setIsSignUp(nextIsSignUp);
@@ -286,13 +289,25 @@ function LoginForm() {
                     <Lock className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-500" />
                     <Input
                       id="password"
-                      type="password"
+                      type={showPassword ? "text" : "password"}
                       autoComplete={isSignUp ? "new-password" : "current-password"}
                       placeholder="••••••••"
                       value={password}
                       onChange={(event) => setPassword(event.target.value)}
-                      className={inputClassName}
+                      className={cn(inputClassName, "pr-10")}
                     />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      aria-label={showPassword ? "Hide password" : "Show password"}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 transition-colors hover:text-slate-300"
+                    >
+                      {showPassword ? (
+                        <EyeOff className="size-4" />
+                      ) : (
+                        <Eye className="size-4" />
+                      )}
+                    </button>
                   </div>
                 </div>
 
