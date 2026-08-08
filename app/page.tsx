@@ -113,7 +113,7 @@ export default function Home() {
       <header className="sticky top-0 z-50 border-b border-white/10 bg-slate-950/80 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
           <Link href="/" className="flex items-center gap-2">
-            <Image src="/logo.png" alt="TrustClip" width={32} height={32} className="h-8 w-auto" />
+            <Image src="/logo.png" alt="TrustClip" width={160} height={48} className="h-10 w-auto md:h-12" />
             <span className="text-base font-semibold tracking-tight">
               TrustClip
             </span>
