@@ -50,15 +50,18 @@ export function VideoCardActions({
   };
 
   const updateStatus = async (
-    nextStatus: string,
-    { checkTrashLimit = false, successMessage = "" } = {}
+    newStatus: "Approved" | "Rejected" | "Pending",
+    { checkTrashLimit = false, successMessage = "" }: {
+      checkTrashLimit?: boolean;
+      successMessage?: string;
+    } = {}
   ) => {
     setIsProcessing(true);
 
     try {
       const { error } = await supabase
         .from("videos")
-        .update({ status: nextStatus })
+        .update({ status: newStatus })
         .eq("id", videoId);
 
       if (error) throw error;
@@ -70,13 +73,14 @@ export function VideoCardActions({
       if (successMessage) toast.success(successMessage);
       router.refresh();
     } catch (error) {
-      console.error(`Failed to update video status to ${nextStatus}:`, error);
+      console.error(`Failed to update video status to ${newStatus}:`, error);
       toast.error("Something went wrong. Please try again.");
+    } finally {
       setIsProcessing(false);
     }
   };
 
-  const handleDeletePermanently = async () => {
+  const deleteVideo = async () => {
     setIsProcessing(true);
 
     try {
@@ -84,12 +88,11 @@ export function VideoCardActions({
       if (error) throw error;
 
       toast.success("Testimonial permanently deleted.");
-      // The card is about to be removed from the tree once the server
-      // component re-fetches, so there's no need to reset isProcessing here.
       router.refresh();
     } catch (error) {
       console.error("Failed to permanently delete video:", error);
       toast.error("Something went wrong while deleting this testimonial. Please try again.");
+    } finally {
       setIsProcessing(false);
     }
   };
@@ -212,7 +215,7 @@ export function VideoCardActions({
       <Button
         variant="destructive"
         className="flex-1"
-        onClick={handleDeletePermanently}
+        onClick={deleteVideo}
         disabled={isProcessing}
       >
         {isProcessing ? (
