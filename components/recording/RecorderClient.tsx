@@ -156,10 +156,21 @@ export function RecorderClient({ businessId, businessName }: RecorderClientProps
 
     chunksRef.current = [];
     const mimeType = getSupportedMimeType();
-    const recorder = new MediaRecorder(
-      streamRef.current,
-      mimeType ? { mimeType } : undefined
-    );
+    const options: MediaRecorderOptions = {
+      videoBitsPerSecond: 2500000,
+      ...(mimeType ? { mimeType } : {}),
+    };
+
+    let recorder: MediaRecorder;
+    try {
+      recorder = new MediaRecorder(streamRef.current, options);
+    } catch (error) {
+      // Some browsers (notably Safari) can reject certain MediaRecorder
+      // options, such as an unsupported bitrate/mimeType combination.
+      // Fall back to letting the browser pick its own defaults.
+      console.warn("MediaRecorder options were rejected, falling back:", error);
+      recorder = new MediaRecorder(streamRef.current);
+    }
 
     recorder.ondataavailable = (event) => {
       if (event.data.size > 0) chunksRef.current.push(event.data);
@@ -200,6 +211,19 @@ export function RecorderClient({ businessId, businessName }: RecorderClientProps
     recordedBlobRef.current = null;
     setTimeLeft(RECORDING_LIMIT_SECONDS);
     setPhase("idle");
+
+    // Some browsers (notably iOS Safari) silently pause a live video element
+    // while it's hidden, so explicitly resume it once it's visible again.
+    requestAnimationFrame(() => {
+      const liveVideo = liveVideoRef.current;
+      if (!liveVideo || !streamRef.current) return;
+      if (liveVideo.srcObject !== streamRef.current) {
+        liveVideo.srcObject = streamRef.current;
+      }
+      liveVideo.play().catch(() => {
+        // Autoplay may be blocked until the next user gesture; safe to ignore.
+      });
+    });
   }, []);
 
   const handleSubmit = useCallback(async () => {
@@ -338,7 +362,7 @@ export function RecorderClient({ businessId, businessName }: RecorderClientProps
             playsInline
             muted
             className={`h-full w-full -scale-x-100 object-cover transition-opacity duration-300 ${
-              showLiveFeed ? "opacity-100" : "opacity-0"
+              phase === "review" ? "hidden" : showLiveFeed ? "opacity-100" : "opacity-0"
             }`}
           />
 
