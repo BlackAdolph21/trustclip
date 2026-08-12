@@ -439,14 +439,7 @@ export default function Home() {
         <div className="mx-auto flex max-w-6xl flex-col gap-10 sm:gap-12">
           <div className="flex flex-col items-start justify-between gap-8 sm:flex-row">
             <div className="max-w-xs">
-              <div className="flex items-center gap-2">
-                <span className="relative flex h-6 w-6 items-center justify-center rounded-md bg-gradient-to-br from-indigo-500 to-blue-500">
-                  <span className="h-1.5 w-1.5 rounded-full bg-white" />
-                </span>
-                <span className="text-sm font-semibold text-slate-300">
-                  TrustClip
-                </span>
-              </div>
+              <span className="text-xl font-bold text-white tracking-tight">TrustClip</span>
               <p className="mt-3 text-sm leading-6 text-slate-500">
                 The fastest way for service businesses to collect and own
                 their video testimonials.
