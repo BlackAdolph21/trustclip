@@ -305,43 +305,6 @@ export function RecorderClient({ businessId, businessName }: RecorderClientProps
         </p>
       </div>
 
-      {phase === "review" && (
-        <div className="mt-6 flex w-full max-w-[380px] flex-col gap-4">
-          <div>
-            <Label htmlFor="customerName" className="text-zinc-300">
-              What is your name?
-            </Label>
-            <Input
-              id="customerName"
-              type="text"
-              autoComplete="name"
-              placeholder="Jane Doe"
-              value={customerName}
-              onChange={(event) => setCustomerName(event.target.value)}
-              className="mt-1.5 border-white/10 bg-white/5 text-zinc-50 placeholder:text-zinc-500 focus-visible:ring-violet-500/30"
-            />
-          </div>
-
-          <div>
-            <Label htmlFor="reviewerBusinessName" className="text-zinc-300">
-              Where do you work? <span className="text-zinc-500">(Optional)</span>
-            </Label>
-            <Input
-              id="reviewerBusinessName"
-              type="text"
-              autoComplete="organization"
-              placeholder="Acme Co."
-              value={reviewerBusinessName}
-              onChange={(event) => setReviewerBusinessName(event.target.value)}
-              className="mt-1.5 border-white/10 bg-white/5 text-zinc-50 placeholder:text-zinc-500 focus-visible:ring-violet-500/30"
-            />
-            <p className="mt-1.5 text-xs text-zinc-500">
-              Adding your company helps make this testimonial even more credible.
-            </p>
-          </div>
-        </div>
-      )}
-
       {phase === "submitted" ? (
         <div className="mx-auto mt-8 flex aspect-[9/16] w-full max-w-[380px] flex-col items-center justify-center gap-4 rounded-[2.5rem] border-8 border-zinc-800 bg-black shadow-2xl shadow-black/60">
           <div className="flex size-16 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-400">
@@ -455,8 +418,49 @@ export function RecorderClient({ businessId, businessName }: RecorderClientProps
         </div>
       )}
 
+      {phase === "review" && (
+        <div className="mt-4 flex w-full max-w-[380px] flex-col gap-3">
+          <div>
+            <Label htmlFor="customerName" className="text-zinc-300">
+              What is your name?
+            </Label>
+            <Input
+              id="customerName"
+              type="text"
+              autoComplete="name"
+              placeholder="Jane Doe"
+              value={customerName}
+              onChange={(event) => setCustomerName(event.target.value)}
+              className="mt-1.5 border-white/10 bg-white/5 text-zinc-50 placeholder:text-zinc-500 focus-visible:ring-violet-500/30"
+            />
+          </div>
+
+          <div>
+            <Label htmlFor="reviewerBusinessName" className="text-zinc-300">
+              Where do you work? <span className="text-zinc-500">(Optional)</span>
+            </Label>
+            <Input
+              id="reviewerBusinessName"
+              type="text"
+              autoComplete="organization"
+              placeholder="Acme Co."
+              value={reviewerBusinessName}
+              onChange={(event) => setReviewerBusinessName(event.target.value)}
+              className="mt-1.5 border-white/10 bg-white/5 text-zinc-50 placeholder:text-zinc-500 focus-visible:ring-violet-500/30"
+            />
+            <p className="mt-1.5 text-xs text-zinc-500">
+              Adding your company helps make this testimonial even more credible.
+            </p>
+          </div>
+        </div>
+      )}
+
       {phase !== "submitted" && (
-        <div className="mt-8 flex w-full max-w-[380px] flex-col gap-3">
+        <div
+          className={`flex w-full max-w-[380px] flex-col gap-3 ${
+            phase === "review" ? "mt-4" : "mt-8"
+          }`}
+        >
           {phase === "idle" && (
             <Button
               size="lg"

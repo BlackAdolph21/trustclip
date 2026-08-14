@@ -172,17 +172,8 @@ export default async function DashboardPage() {
 
         {collectionLink && <CollectionLinkCard url={collectionLink} />}
 
-        <Tabs defaultValue="pending" className="mt-10">
+        <Tabs defaultValue="approved" className="mt-10">
           <TabsList className="w-fit gap-1 rounded-full border border-white/10 bg-white/5 p-1">
-            <TabsTrigger
-              value="pending"
-              className="rounded-full px-4 text-zinc-400 data-[state=active]:bg-white/10 data-[state=active]:text-zinc-50"
-            >
-              Pending
-              {pendingVideos.length > 0 && (
-                <span className="ml-1.5 text-xs text-zinc-500">{pendingVideos.length}</span>
-              )}
-            </TabsTrigger>
             <TabsTrigger
               value="approved"
               className="rounded-full px-4 text-zinc-400 data-[state=active]:bg-white/10 data-[state=active]:text-zinc-50"
@@ -190,6 +181,15 @@ export default async function DashboardPage() {
               Approved
               {approvedVideos.length > 0 && (
                 <span className="ml-1.5 text-xs text-zinc-500">{approvedVideos.length}</span>
+              )}
+            </TabsTrigger>
+            <TabsTrigger
+              value="pending"
+              className="rounded-full px-4 text-zinc-400 data-[state=active]:bg-white/10 data-[state=active]:text-zinc-50"
+            >
+              Pending
+              {pendingVideos.length > 0 && (
+                <span className="ml-1.5 text-xs text-zinc-500">{pendingVideos.length}</span>
               )}
             </TabsTrigger>
             <TabsTrigger
@@ -203,21 +203,21 @@ export default async function DashboardPage() {
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="pending">
-            <VideoGrid
-              videos={pendingVideos}
-              status="Pending"
-              businessId={user.id}
-              emptyMessage="You're all caught up. New submissions will show up here for you to review."
-            />
-          </TabsContent>
-
           <TabsContent value="approved">
             <VideoGrid
               videos={approvedVideos}
               status="Approved"
               businessId={user.id}
               emptyMessage="You haven't approved any testimonials yet. Approve one from your Pending tab to see it here."
+            />
+          </TabsContent>
+
+          <TabsContent value="pending">
+            <VideoGrid
+              videos={pendingVideos}
+              status="Pending"
+              businessId={user.id}
+              emptyMessage="You're all caught up. New submissions will show up here for you to review."
             />
           </TabsContent>
 
