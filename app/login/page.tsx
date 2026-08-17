@@ -296,8 +296,8 @@ function LoginForm() {
 
               <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
                 {view === "signup" && (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
-                    <div className="space-y-2 w-full">
+                  <div className="flex w-full flex-col gap-4 sm:flex-row">
+                    <div className="w-full flex-1 space-y-2">
                       <Label htmlFor="firstName" className="text-slate-300">
                         First Name
                       </Label>
@@ -310,11 +310,12 @@ function LoginForm() {
                           placeholder="Jane"
                           value={firstName}
                           onChange={(event) => setFirstName(event.target.value)}
+                          required
                           className={cn(inputClassName, "w-full")}
                         />
                       </div>
                     </div>
-                    <div className="space-y-2 w-full">
+                    <div className="w-full flex-1 space-y-2">
                       <Label htmlFor="lastName" className="text-slate-300">
                         Last Name
                       </Label>
@@ -327,6 +328,7 @@ function LoginForm() {
                           placeholder="Doe"
                           value={lastName}
                           onChange={(event) => setLastName(event.target.value)}
+                          required
                           className={cn(inputClassName, "w-full")}
                         />
                       </div>
