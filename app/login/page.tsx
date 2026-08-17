@@ -296,12 +296,12 @@ function LoginForm() {
 
               <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
                 {view === "signup" && (
-                  <div className="flex w-full flex-col gap-4 sm:flex-row">
-                    <div className="w-full flex-1 space-y-2">
+                  <>
+                    <div className="space-y-2">
                       <Label htmlFor="firstName" className="text-slate-300">
                         First Name
                       </Label>
-                      <div className="relative w-full">
+                      <div className="relative">
                         <User className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-500" />
                         <Input
                           id="firstName"
@@ -311,15 +311,15 @@ function LoginForm() {
                           value={firstName}
                           onChange={(event) => setFirstName(event.target.value)}
                           required
-                          className={cn(inputClassName, "w-full")}
+                          className={inputClassName}
                         />
                       </div>
                     </div>
-                    <div className="w-full flex-1 space-y-2">
+                    <div className="space-y-2">
                       <Label htmlFor="lastName" className="text-slate-300">
                         Last Name
                       </Label>
-                      <div className="relative w-full">
+                      <div className="relative">
                         <User className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-500" />
                         <Input
                           id="lastName"
@@ -329,11 +329,11 @@ function LoginForm() {
                           value={lastName}
                           onChange={(event) => setLastName(event.target.value)}
                           required
-                          className={cn(inputClassName, "w-full")}
+                          className={inputClassName}
                         />
                       </div>
                     </div>
-                  </div>
+                  </>
                 )}
 
                 {view === "signup" && (
