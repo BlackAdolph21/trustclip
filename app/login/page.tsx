@@ -296,8 +296,8 @@ function LoginForm() {
 
               <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
                 {view === "signup" && (
-                  <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
-                    <div className="flex flex-1 flex-col gap-1.5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+                    <div className="flex flex-col gap-1.5">
                       <Label htmlFor="firstName" className="text-slate-300">
                         First Name
                       </Label>
@@ -314,7 +314,7 @@ function LoginForm() {
                         />
                       </div>
                     </div>
-                    <div className="flex flex-1 flex-col gap-1.5">
+                    <div className="flex flex-col gap-1.5">
                       <Label htmlFor="lastName" className="text-slate-300">
                         Last Name
                       </Label>
