@@ -109,7 +109,7 @@ function LoginForm() {
           return;
         }
 
-        const { error: signUpError } = await supabase.auth.signUp({
+        const { data, error: signUpError } = await supabase.auth.signUp({
           email,
           password,
           options: {
@@ -127,6 +127,13 @@ function LoginForm() {
           } else {
             setError(signUpError.message);
           }
+          return;
+        }
+
+        // Supabase returns a fake "success" with an empty identities array
+        // when the email is already registered, instead of an error.
+        if (data?.user && data.user.identities && data.user.identities.length === 0) {
+          setError("This email address is already in use. Please log in instead.");
           return;
         }
 
