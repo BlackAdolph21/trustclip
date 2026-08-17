@@ -297,11 +297,11 @@ function LoginForm() {
               <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
                 {view === "signup" && (
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
-                    <div className="flex flex-col gap-1.5">
+                    <div className="space-y-2 w-full">
                       <Label htmlFor="firstName" className="text-slate-300">
                         First Name
                       </Label>
-                      <div className="relative">
+                      <div className="relative w-full">
                         <User className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-500" />
                         <Input
                           id="firstName"
@@ -310,15 +310,15 @@ function LoginForm() {
                           placeholder="Jane"
                           value={firstName}
                           onChange={(event) => setFirstName(event.target.value)}
-                          className={inputClassName}
+                          className={cn(inputClassName, "w-full")}
                         />
                       </div>
                     </div>
-                    <div className="flex flex-col gap-1.5">
+                    <div className="space-y-2 w-full">
                       <Label htmlFor="lastName" className="text-slate-300">
                         Last Name
                       </Label>
-                      <div className="relative">
+                      <div className="relative w-full">
                         <User className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-500" />
                         <Input
                           id="lastName"
@@ -327,7 +327,7 @@ function LoginForm() {
                           placeholder="Doe"
                           value={lastName}
                           onChange={(event) => setLastName(event.target.value)}
-                          className={inputClassName}
+                          className={cn(inputClassName, "w-full")}
                         />
                       </div>
                     </div>
