@@ -289,7 +289,7 @@ export function RecorderClient({ businessId, businessName }: RecorderClientProps
   return (
     <div className="flex min-h-screen flex-col items-center bg-zinc-950 px-4 py-10 text-zinc-50 sm:py-16">
       <div className="flex items-center gap-2">
-        <span className="text-xl font-bold text-white tracking-tight">TrustClip</span>
+        <span className="text-3xl font-bold text-white tracking-tight">TrustClip</span>
       </div>
 
       <div className="mt-8 text-center">

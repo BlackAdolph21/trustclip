@@ -191,7 +191,7 @@ function LoginForm() {
       </div>
 
       <Link href="/" className="mb-8 block text-center">
-        <span className="text-xl font-bold text-white tracking-tight">TrustClip</span>
+        <span className="text-3xl font-bold text-white tracking-tight md:text-4xl">TrustClip</span>
       </Link>
 
       <Card className="w-full max-w-md rounded-3xl border border-white/10 bg-white/[0.03] shadow-none ring-0 [--card-spacing:--spacing(10)]">

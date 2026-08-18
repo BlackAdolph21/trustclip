@@ -146,7 +146,7 @@ export default async function DashboardPage() {
       <header className="sticky top-0 z-10 border-b border-white/10 bg-slate-950/80 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
           <div className="flex items-center gap-2">
-            <span className="text-xl font-bold text-white tracking-tight">TrustClip</span>
+            <span className="text-3xl font-bold text-white tracking-tight">TrustClip</span>
           </div>
           <LogoutButton />
         </div>

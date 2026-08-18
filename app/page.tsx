@@ -112,7 +112,7 @@ export default function Home() {
       <header className="sticky top-0 z-50 border-b border-white/10 bg-slate-950/80 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
           <Link href="/" className="flex items-center gap-2">
-            <span className="text-xl font-bold text-white tracking-tight">TrustClip</span>
+            <span className="text-3xl font-bold text-white tracking-tight">TrustClip</span>
           </Link>
 
           <nav className="hidden items-center gap-8 md:flex">
@@ -439,7 +439,7 @@ export default function Home() {
         <div className="mx-auto flex max-w-6xl flex-col gap-10 sm:gap-12">
           <div className="flex flex-col items-start justify-between gap-8 sm:flex-row">
             <div className="max-w-xs">
-              <span className="text-xl font-bold text-white tracking-tight">TrustClip</span>
+              <span className="text-3xl font-bold text-white tracking-tight">TrustClip</span>
               <p className="mt-3 text-sm leading-6 text-slate-500">
                 The fastest way for service businesses to collect and own
                 their video testimonials.
