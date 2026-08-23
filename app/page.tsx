@@ -17,6 +17,7 @@ import {
   Star,
 } from "lucide-react";
 
+import { SiteHeader } from "@/components/marketing/site-header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
@@ -109,39 +110,7 @@ export default function Home() {
         <div className="absolute bottom-[-25%] right-[-10%] h-[32rem] w-[32rem] rounded-full bg-blue-600/10 blur-[130px]" />
       </div>
 
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-slate-950/80 backdrop-blur-md">
-        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-          <Link href="/" className="flex items-center gap-2">
-            <span className="text-3xl font-bold text-white tracking-tight">TrustClip</span>
-          </Link>
-
-          <nav className="hidden items-center gap-8 md:flex">
-            {NAV_LINKS.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="text-sm text-slate-400 transition-colors hover:text-slate-50"
-              >
-                {link.label}
-              </a>
-            ))}
-          </nav>
-
-          <div className="flex items-center gap-2 sm:gap-3">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="hidden text-slate-300 hover:bg-white/5 hover:text-slate-50 sm:inline-flex"
-              asChild
-            >
-              <Link href="/login">Log in</Link>
-            </Button>
-            <Button size="sm" asChild>
-              <Link href="/login?tab=signup">Get Started Free</Link>
-            </Button>
-          </div>
-        </div>
-      </header>
+      <SiteHeader navLinks={NAV_LINKS} />
 
       <main>
         <section className="relative overflow-hidden px-4 pb-20 pt-16 sm:px-6 sm:pb-28 sm:pt-24 lg:pt-32">
