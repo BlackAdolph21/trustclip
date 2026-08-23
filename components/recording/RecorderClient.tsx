@@ -242,6 +242,13 @@ export function RecorderClient({ businessId, businessName }: RecorderClientProps
       ? `${customerName.trim()} | ${trimmedBusinessName}`
       : customerName.trim();
 
+    // MediaRecorder blobs often include codec parameters (e.g.
+    // "video/webm;codecs=vp9,opus"). The presigned URL is signed against a
+    // specific Content-Type, so the exact same stripped value must be sent
+    // in both the presign request and the actual PUT — any mismatch causes
+    // R2 to reject the upload with a signature error.
+    const baseContentType = blob.type.split(";")[0].trim();
+
     try {
       // Step 1: ask for a presigned R2 URL. Nothing is written to the
       // database yet — this route only ever returns a URL to upload to.
@@ -249,7 +256,7 @@ export function RecorderClient({ businessId, businessName }: RecorderClientProps
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          contentType: blob.type,
+          contentType: baseContentType,
           fileSize: blob.size,
           businessId,
         }),
@@ -267,7 +274,7 @@ export function RecorderClient({ businessId, businessName }: RecorderClientProps
       // so no "ghost" record is ever created for a video that doesn't exist.
       const uploadResponse = await fetch(uploadUrl, {
         method: "PUT",
-        headers: { "Content-Type": "video/mp4" },
+        headers: { "Content-Type": baseContentType },
         body: blob,
       });
       if (!uploadResponse.ok) {
