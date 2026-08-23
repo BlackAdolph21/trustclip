@@ -3,8 +3,6 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 
-import { createClient } from "@/utils/supabase/server";
-
 const s3Client = new S3Client({
   region: "auto",
   endpoint: `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
@@ -53,7 +51,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const { contentType, businessId, customerName, fileSize } = await request.json();
+    const { contentType, businessId, fileSize } = await request.json();
 
     // Security check: reject the request up front if we don't know which
     // business this recording belongs to, rather than generating an upload
@@ -91,8 +89,6 @@ export async function POST(request: Request) {
       );
     }
 
-    const supabase = await createClient();
-
     const fileName = `${crypto.randomUUID()}.mp4`;
 
     const command = new PutObjectCommand({
@@ -105,19 +101,11 @@ export async function POST(request: Request) {
       expiresIn: 60,
     });
 
-    const videoUrl = `https://${process.env.NEXT_PUBLIC_R2_PUBLIC_DOMAIN}/${fileName}`;
-
-    const { error: insertError } = await supabase.from("videos").insert({
-      business_id: businessId,
-      customer_name: customerName || "Anonymous",
-      video_url: videoUrl,
-      status: "Pending",
-    });
-
-    if (insertError) {
-      throw insertError;
-    }
-
+    // Intentionally no Supabase write here: this route only hands out a
+    // presigned URL. The database row is only created by
+    // `/api/upload/complete` once the client confirms the video has
+    // actually landed in R2, so a failed upload never leaves behind an
+    // unplayable "ghost" record.
     return Response.json({ uploadUrl, fileName });
   } catch (error) {
     console.error("Failed to create upload URL:", error);

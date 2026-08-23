@@ -243,13 +243,14 @@ export function RecorderClient({ businessId, businessName }: RecorderClientProps
       : customerName.trim();
 
     try {
+      // Step 1: ask for a presigned R2 URL. Nothing is written to the
+      // database yet — this route only ever returns a URL to upload to.
       const presignResponse = await fetch("/api/upload", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           contentType: blob.type,
           fileSize: blob.size,
-          customerName: finalName,
           businessId,
         }),
       });
@@ -259,15 +260,38 @@ export function RecorderClient({ businessId, businessName }: RecorderClientProps
           .catch(() => ({ error: null }));
         throw new Error(presignError || "Failed to get upload URL.");
       }
-      const { uploadUrl } = await presignResponse.json();
+      const { uploadUrl, fileName } = await presignResponse.json();
 
+      // Step 2: upload the video itself. If this fails for any reason
+      // (e.g. a CORS error), we abort here and never touch the database,
+      // so no "ghost" record is ever created for a video that doesn't exist.
       const uploadResponse = await fetch(uploadUrl, {
         method: "PUT",
         headers: { "Content-Type": "video/mp4" },
         body: blob,
       });
       if (!uploadResponse.ok) {
-        throw new Error("Failed to upload video.");
+        throw new Error("Failed to upload video. Please check your connection and try again.");
+      }
+
+      // Step 3: only now that the video is confirmed to be in R2 do we
+      // record the testimonial in Supabase.
+      const completeResponse = await fetch("/api/upload/complete", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fileName,
+          businessId,
+          customerName: finalName,
+        }),
+      });
+      if (!completeResponse.ok) {
+        const { error: completeError } = await completeResponse
+          .json()
+          .catch(() => ({ error: null }));
+        throw new Error(
+          completeError || "Your video uploaded, but we couldn't save it. Please try again."
+        );
       }
 
       setPhase("submitted");
