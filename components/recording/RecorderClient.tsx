@@ -485,7 +485,7 @@ export function RecorderClient({ businessId, businessName }: RecorderClientProps
           )}
 
           {phase === "review" && (
-            <div className="flex flex-col gap-3 sm:flex-row">
+            <div className="flex flex-col gap-3 pt-2">
               <Button
                 variant="outline"
                 size="lg"
