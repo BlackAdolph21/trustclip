@@ -17,6 +17,7 @@ import {
   Star,
 } from "lucide-react";
 
+import { ProductJourney } from "@/components/marketing/product-journey";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -24,7 +25,6 @@ import { Button } from "@/components/ui/button";
 const NAV_LINKS = [
   { label: "Product", href: "#features" },
   { label: "How it Works", href: "#how-it-works" },
-  { label: "Testimonials", href: "#testimonials" },
 ];
 
 const TRUSTED_BY = ["Northwind", "Vantage Legal", "Bramwell & Co.", "Solace Health", "Ledgerline", "Atlas Realty"];
@@ -86,12 +86,6 @@ const FEATURES = [
     description:
       "No confusing timelines or editing suites. Just a clean inbox of your client success stories.",
   },
-];
-
-const STATS = [
-  { value: "4.6x", label: "more responses than email requests" },
-  { value: "92%", label: "recording completion rate" },
-  { value: "<60s", label: "average time for clients to record" },
 ];
 
 export default function Home() {
@@ -245,18 +239,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="border-b border-white/10 bg-white/[0.02] px-4 py-12 sm:px-6">
-          <div className="mx-auto grid max-w-4xl grid-cols-1 gap-8 text-center sm:grid-cols-3">
-            {STATS.map((stat) => (
-              <div key={stat.label}>
-                <p className="text-3xl font-semibold tracking-tight text-slate-50 sm:text-4xl">
-                  {stat.value}
-                </p>
-                <p className="mt-2 text-sm text-slate-500">{stat.label}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+        <ProductJourney />
 
         <section id="how-it-works" className="px-4 py-20 sm:px-6 sm:py-28 lg:py-32">
           <div className="mx-auto max-w-6xl">
@@ -340,38 +323,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="testimonials" className="border-t border-white/10 px-4 py-20 sm:px-6 sm:py-28 lg:py-32">
-          <div className="mx-auto max-w-3xl">
-            <div className="rounded-3xl border border-white/10 bg-gradient-to-b from-white/[0.04] to-transparent p-8 text-center sm:p-14">
-              <div className="mb-6 flex justify-center gap-1 text-amber-400">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star key={i} className="size-5 fill-current" />
-                ))}
-              </div>
-              <p className="text-balance text-xl font-medium leading-snug text-slate-100 sm:text-2xl sm:leading-tight lg:text-3xl">
-                &ldquo;We went from asking clients for reviews and getting
-                ignored, to collecting a dozen video testimonials a
-                month&mdash;without lifting a finger. The lack of friction is
-                incredible.&rdquo;
-              </p>
-              <div className="mt-8 flex items-center justify-center gap-3">
-                <span className="flex size-10 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-blue-500 text-sm font-semibold">
-                  MC
-                </span>
-                <div className="text-left">
-                  <p className="text-sm font-medium text-slate-100">
-                    Maya Chen
-                  </p>
-                  <p className="text-xs text-slate-500">
-                    Founder, Loopwave
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="px-4 pb-20 sm:px-6 sm:pb-28 lg:pb-32">
+        <section className="border-t border-white/10 px-4 py-20 sm:px-6 sm:pb-28 sm:pt-24 lg:pb-32 lg:pt-32">
           <div className="mx-auto max-w-5xl overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-indigo-600/20 via-blue-600/10 to-transparent px-6 py-14 text-center sm:px-16 sm:py-16">
             <div className="mx-auto mb-4 flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-1 text-xs font-medium text-slate-300">
               <ShieldCheck className="size-3.5 text-indigo-400" />

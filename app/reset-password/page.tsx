@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { CircleAlert, Eye, EyeOff, Loader2, Lock, ShieldCheck } from "lucide-react";
 
+import { BrandMark } from "@/components/shared/brand-mark";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -72,9 +72,9 @@ export default function ResetPasswordPage() {
         <div className="absolute bottom-[-20%] right-[-10%] h-[30rem] w-[30rem] rounded-full bg-blue-600/10 blur-[120px]" />
       </div>
 
-      <Link href="/" className="mb-8 block text-center">
-        <span className="text-xl font-bold text-white tracking-tight">TrustClip</span>
-      </Link>
+      <div className="mb-8 flex justify-center">
+        <BrandMark />
+      </div>
 
       <Card className="w-full max-w-md rounded-3xl border border-white/10 bg-white/[0.03] shadow-none ring-0 [--card-spacing:--spacing(10)]">
         <CardContent className="flex flex-col gap-6">

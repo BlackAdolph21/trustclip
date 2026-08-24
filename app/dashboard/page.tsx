@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CollectionLinkCard } from "@/components/dashboard/collection-link-card";
+import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 import { LogoutButton } from "@/components/dashboard/logout-button";
 import { VideoCardActions } from "@/components/dashboard/video-card-actions";
 import { createClient } from "@/utils/supabase/server";
@@ -143,14 +144,9 @@ export default async function DashboardPage() {
         <div className="absolute bottom-[-20%] right-[-10%] h-[30rem] w-[30rem] rounded-full bg-blue-600/10 blur-[120px]" />
       </div>
 
-      <header className="sticky top-0 z-10 border-b border-white/10 bg-slate-950/80 backdrop-blur-md">
-        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
-          <div className="flex items-center gap-2">
-            <span className="text-3xl font-bold text-white tracking-tight">TrustClip</span>
-          </div>
-          <LogoutButton />
-        </div>
-      </header>
+      <DashboardHeader>
+        <LogoutButton />
+      </DashboardHeader>
 
       <main className="mx-auto max-w-6xl px-6 py-12 sm:py-16">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
