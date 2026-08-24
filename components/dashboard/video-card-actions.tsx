@@ -2,17 +2,28 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { CheckCircle2, Download, Loader2, RotateCcw, Trash2, X } from "lucide-react";
+import { CheckCircle2, Download, Loader2, RotateCcw, Trash2, TriangleAlert, X } from "lucide-react";
 import { toast } from "sonner";
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogMedia,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { CardFooter } from "@/components/ui/card";
 import { createClient } from "@/utils/supabase/client";
 
 const TRASH_LIMIT = 10;
 
-const outlineButtonClassName =
-  "flex-1 border-white/15 bg-transparent text-zinc-100 hover:bg-white/5";
+const outlineButtonClassName = "flex-1";
 
 type VideoCardActionsProps = {
   videoId: string | number;
@@ -212,19 +223,45 @@ export function VideoCardActions({
         <RotateCcw className="size-4" />
         Restore
       </Button>
-      <Button
-        variant="destructive"
-        className="flex-1"
-        onClick={deleteVideo}
-        disabled={isProcessing}
-      >
-        {isProcessing ? (
-          <Loader2 className="size-4 animate-spin" />
-        ) : (
-          <Trash2 className="size-4" />
-        )}
-        Delete Permanently
-      </Button>
+      <AlertDialog>
+        <AlertDialogTrigger asChild>
+          <Button variant="destructive" className="flex-1" disabled={isProcessing}>
+            {isProcessing ? (
+              <Loader2 className="size-4 animate-spin" />
+            ) : (
+              <Trash2 className="size-4" />
+            )}
+            Delete Permanently
+          </Button>
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogMedia className="bg-destructive/10 text-destructive">
+              <TriangleAlert />
+            </AlertDialogMedia>
+            <AlertDialogTitle>Delete this testimonial for good?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This can&apos;t be undone. The video file and its record will be
+              permanently removed.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              variant="destructive"
+              onClick={deleteVideo}
+              disabled={isProcessing}
+            >
+              {isProcessing ? (
+                <Loader2 className="size-4 animate-spin" />
+              ) : (
+                <Trash2 className="size-4" />
+              )}
+              Delete Permanently
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </CardFooter>
   );
 }

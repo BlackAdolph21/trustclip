@@ -76,10 +76,10 @@ export default function ResetPasswordPage() {
         <BrandMark />
       </div>
 
-      <Card className="w-full max-w-md rounded-3xl border border-white/10 bg-white/[0.03] shadow-none ring-0 [--card-spacing:--spacing(10)]">
+      <Card className="animate-in fade-in-0 zoom-in-95 w-full max-w-md rounded-3xl border border-white/10 bg-white/[0.03] shadow-none ring-0 duration-300 [--card-spacing:--spacing(10)]">
         <CardContent className="flex flex-col gap-6">
           {isComplete ? (
-            <div className="flex flex-col items-center gap-4 py-4 text-center">
+            <div className="animate-in fade-in-0 flex flex-col items-center gap-4 py-4 text-center duration-300">
               <div className="flex size-14 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-300">
                 <ShieldCheck className="size-6" />
               </div>
@@ -106,7 +106,7 @@ export default function ResetPasswordPage() {
               </div>
 
               {error && (
-                <div className="flex items-start gap-2.5 rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-400">
+                <div className="animate-in fade-in-0 slide-in-from-top-1 flex items-start gap-2.5 rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-400 duration-200">
                   <CircleAlert className="mt-0.5 size-4 shrink-0" />
                   <p>{error}</p>
                 </div>

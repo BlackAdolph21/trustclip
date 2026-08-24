@@ -319,7 +319,7 @@ export function RecorderClient({ businessId, businessName }: RecorderClientProps
   const showLiveFeed = isCameraReady && phase !== "review";
 
   return (
-    <div className="flex min-h-screen flex-col items-center bg-zinc-950 px-4 py-10 text-zinc-50 sm:py-16">
+    <div className="animate-in fade-in-0 flex min-h-screen flex-col items-center bg-zinc-950 px-4 py-10 text-zinc-50 duration-500 sm:py-16">
       <BrandMark />
 
       <div className="mt-8 text-center">
@@ -336,14 +336,14 @@ export function RecorderClient({ businessId, businessName }: RecorderClientProps
       </div>
 
       {phase === "submitted" ? (
-        <div className="mx-auto mt-8 flex aspect-[9/16] w-full max-w-[380px] flex-col items-center justify-center gap-4 rounded-[2.5rem] border-8 border-zinc-800 bg-black shadow-2xl shadow-black/60">
+        <div className="animate-in fade-in-0 zoom-in-95 mx-auto mt-8 flex aspect-[9/16] w-full max-w-[380px] flex-col items-center justify-center gap-4 rounded-[2.5rem] border-8 border-zinc-800 bg-black shadow-2xl shadow-black/60 duration-500">
           <div className="flex size-16 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-400">
             <Send className="size-7" />
           </div>
           <p className="text-lg font-semibold text-zinc-50">Thank You!</p>
         </div>
       ) : (
-        <div className="relative mx-auto mt-8 aspect-[9/16] w-full max-w-[380px] overflow-hidden rounded-[2.5rem] border-8 border-zinc-800 bg-black shadow-2xl shadow-black/60">
+        <div className="animate-in fade-in-0 zoom-in-95 relative mx-auto mt-8 aspect-[9/16] w-full max-w-[380px] overflow-hidden rounded-[2.5rem] border-8 border-zinc-800 bg-black shadow-2xl shadow-black/60 duration-500">
           <div className="pointer-events-none absolute top-0 left-1/2 z-10 h-5 w-28 -translate-x-1/2 rounded-b-2xl bg-zinc-800" />
 
           <video
@@ -389,7 +389,7 @@ export function RecorderClient({ businessId, businessName }: RecorderClientProps
           )}
 
           {cameraStatus === "denied" && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-zinc-950 px-6 text-center">
+            <div className="animate-in fade-in-0 absolute inset-0 flex flex-col items-center justify-center gap-3 bg-zinc-950 px-6 text-center duration-300">
               <div className="flex size-14 items-center justify-center rounded-full bg-red-500/10 text-red-400">
                 <CameraOff className="size-6" />
               </div>
@@ -403,7 +403,7 @@ export function RecorderClient({ businessId, businessName }: RecorderClientProps
               <Button
                 variant="outline"
                 size="sm"
-                className="mt-1 border-white/15 bg-transparent text-zinc-100 hover:bg-white/5"
+                className="mt-1"
                 onClick={handleRetryCamera}
               >
                 <RefreshCw className="size-4" />
@@ -413,7 +413,7 @@ export function RecorderClient({ businessId, businessName }: RecorderClientProps
           )}
 
           {cameraStatus === "unsupported" && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-zinc-950 px-6 text-center">
+            <div className="animate-in fade-in-0 absolute inset-0 flex flex-col items-center justify-center gap-3 bg-zinc-950 px-6 text-center duration-300">
               <div className="flex size-14 items-center justify-center rounded-full bg-amber-500/10 text-amber-400">
                 <TriangleAlert className="size-6" />
               </div>
@@ -427,7 +427,7 @@ export function RecorderClient({ businessId, businessName }: RecorderClientProps
           )}
 
           {cameraStatus === "error" && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-zinc-950 px-6 text-center">
+            <div className="animate-in fade-in-0 absolute inset-0 flex flex-col items-center justify-center gap-3 bg-zinc-950 px-6 text-center duration-300">
               <div className="flex size-14 items-center justify-center rounded-full bg-red-500/10 text-red-400">
                 <TriangleAlert className="size-6" />
               </div>
@@ -437,7 +437,7 @@ export function RecorderClient({ businessId, businessName }: RecorderClientProps
               <Button
                 variant="outline"
                 size="sm"
-                className="mt-1 border-white/15 bg-transparent text-zinc-100 hover:bg-white/5"
+                className="mt-1"
                 onClick={handleRetryCamera}
               >
                 <RefreshCw className="size-4" />
@@ -449,7 +449,7 @@ export function RecorderClient({ businessId, businessName }: RecorderClientProps
       )}
 
       {phase === "review" && (
-        <div className="mt-4 flex w-full max-w-[380px] flex-col gap-3">
+        <div className="animate-in fade-in-0 slide-in-from-bottom-1 mt-4 flex w-full max-w-[380px] flex-col gap-3 duration-300">
           <div>
             <Label htmlFor="customerName" className="text-zinc-300">
               What is your name?
@@ -461,7 +461,7 @@ export function RecorderClient({ businessId, businessName }: RecorderClientProps
               placeholder="Jane Doe"
               value={customerName}
               onChange={(event) => setCustomerName(event.target.value)}
-              className="mt-1.5 border-white/10 bg-white/5 text-zinc-50 placeholder:text-zinc-500 focus-visible:ring-violet-500/30"
+              className="mt-1.5 text-zinc-50 placeholder:text-zinc-500"
             />
           </div>
 
@@ -476,7 +476,7 @@ export function RecorderClient({ businessId, businessName }: RecorderClientProps
               placeholder="Acme Co."
               value={reviewerBusinessName}
               onChange={(event) => setReviewerBusinessName(event.target.value)}
-              className="mt-1.5 border-white/10 bg-white/5 text-zinc-50 placeholder:text-zinc-500 focus-visible:ring-violet-500/30"
+              className="mt-1.5 text-zinc-50 placeholder:text-zinc-500"
             />
             <p className="mt-1.5 text-xs text-zinc-500">
               Adding your company helps make this testimonial even more credible.
@@ -519,7 +519,7 @@ export function RecorderClient({ businessId, businessName }: RecorderClientProps
               <Button
                 variant="outline"
                 size="lg"
-                className="w-full border-white/15 bg-transparent text-base text-zinc-100 hover:bg-white/5"
+                className="w-full text-base"
                 onClick={retakeVideo}
                 disabled={isUploading}
               >

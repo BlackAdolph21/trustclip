@@ -30,10 +30,29 @@ function formatDate(dateString: string) {
 }
 
 const STATUS_BADGE_CLASSNAME: Record<VideoStatus, string> = {
-  Pending: "absolute right-3 top-3 border-none bg-amber-500 text-amber-950",
-  Approved: "absolute right-3 top-3 border-none bg-emerald-500 text-emerald-950",
-  Rejected: "absolute right-3 top-3 border-none bg-zinc-700 text-zinc-200",
+  Pending:
+    "absolute right-3 top-3 border border-amber-400/20 bg-amber-500/15 text-amber-300 backdrop-blur-md",
+  Approved:
+    "absolute right-3 top-3 border border-emerald-400/20 bg-emerald-500/15 text-emerald-300 backdrop-blur-md",
+  Rejected:
+    "absolute right-3 top-3 border border-white/10 bg-white/10 text-zinc-300 backdrop-blur-md",
 };
+
+const EMPTY_STATE_ICON_CLASSNAME: Record<VideoStatus, string> = {
+  Pending: "bg-amber-500/10 text-amber-400",
+  Approved: "bg-emerald-500/10 text-emerald-400",
+  Rejected: "bg-white/5 text-zinc-500",
+};
+
+function TabCountBadge({ count }: { count: number }) {
+  if (count === 0) return null;
+
+  return (
+    <span className="inline-flex h-4.5 min-w-4.5 items-center justify-center rounded-full bg-white/10 px-1 text-[10px] font-medium text-zinc-300">
+      {count}
+    </span>
+  );
+}
 
 function VideoGrid({
   videos,
@@ -48,22 +67,27 @@ function VideoGrid({
 }) {
   if (videos.length === 0) {
     return (
-      <div className="flex min-h-[40vh] flex-col items-center justify-center gap-3 text-center">
-        <Film className="size-8 text-zinc-600" />
-        <p className="max-w-sm text-sm text-zinc-400">{emptyMessage}</p>
+      <div className="mt-6 flex min-h-[32vh] flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-white/10 bg-white/[0.015] px-6 text-center">
+        <div
+          className={`flex size-12 items-center justify-center rounded-full ${EMPTY_STATE_ICON_CLASSNAME[status]}`}
+        >
+          <Film className="size-5" />
+        </div>
+        <p className="max-w-sm text-sm leading-6 text-zinc-400">{emptyMessage}</p>
       </div>
     );
   }
 
   return (
     <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {videos.map((video) => (
+      {videos.map((video, index) => (
         <Card
           key={video.id}
-          className="rounded-2xl border border-white/10 bg-white/[0.03] text-zinc-50 shadow-none ring-0 transition-colors hover:bg-white/[0.05]"
+          style={{ animationDelay: `${Math.min(index, 6) * 60}ms` }}
+          className="animate-in fade-in-0 slide-in-from-bottom-1 rounded-2xl border border-white/10 bg-white/[0.03] text-zinc-50 shadow-none ring-0 transition-all duration-300 fill-mode-backwards hover:-translate-y-0.5 hover:border-white/15 hover:bg-white/[0.05] hover:shadow-lg hover:shadow-black/20"
         >
           <CardContent className="flex flex-col gap-4">
-            <div className="relative aspect-video overflow-hidden rounded-xl bg-zinc-800">
+            <div className="relative aspect-video overflow-hidden rounded-xl bg-zinc-900 ring-1 ring-white/5">
               {video.video_url ? (
                 <video
                   src={video.video_url}
@@ -149,7 +173,7 @@ export default async function DashboardPage() {
       </DashboardHeader>
 
       <main className="mx-auto max-w-6xl px-6 py-12 sm:py-16">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div className="animate-in fade-in-0 slide-in-from-bottom-1 flex flex-col gap-4 duration-500 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
               Welcome back{profile?.first_name ? `, ${profile.first_name}` : ""}!
@@ -166,40 +190,44 @@ export default async function DashboardPage() {
           </p>
         </div>
 
-        {collectionLink && <CollectionLinkCard url={collectionLink} />}
+        {collectionLink && (
+          <div className="animate-in fade-in-0 slide-in-from-bottom-1 duration-500 [animation-delay:80ms] fill-mode-backwards">
+            <CollectionLinkCard url={collectionLink} />
+          </div>
+        )}
 
-        <Tabs defaultValue="approved" className="mt-10">
+        <Tabs
+          defaultValue="approved"
+          className="animate-in fade-in-0 slide-in-from-bottom-1 mt-10 duration-500 [animation-delay:140ms] fill-mode-backwards"
+        >
           <TabsList className="w-fit gap-1 rounded-full border border-white/10 bg-white/5 p-1">
             <TabsTrigger
               value="approved"
               className="rounded-full px-4 text-zinc-400 data-[state=active]:bg-white/10 data-[state=active]:text-zinc-50"
             >
               Approved
-              {approvedVideos.length > 0 && (
-                <span className="ml-1.5 text-xs text-zinc-500">{approvedVideos.length}</span>
-              )}
+              <TabCountBadge count={approvedVideos.length} />
             </TabsTrigger>
             <TabsTrigger
               value="pending"
               className="rounded-full px-4 text-zinc-400 data-[state=active]:bg-white/10 data-[state=active]:text-zinc-50"
             >
               Pending
-              {pendingVideos.length > 0 && (
-                <span className="ml-1.5 text-xs text-zinc-500">{pendingVideos.length}</span>
-              )}
+              <TabCountBadge count={pendingVideos.length} />
             </TabsTrigger>
             <TabsTrigger
               value="trash"
               className="rounded-full px-4 text-zinc-400 data-[state=active]:bg-white/10 data-[state=active]:text-zinc-50"
             >
               Trash
-              {trashVideos.length > 0 && (
-                <span className="ml-1.5 text-xs text-zinc-500">{trashVideos.length}</span>
-              )}
+              <TabCountBadge count={trashVideos.length} />
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="approved">
+          <TabsContent
+            value="approved"
+            className="data-[state=active]:animate-in data-[state=active]:fade-in-0 data-[state=active]:duration-300"
+          >
             <VideoGrid
               videos={approvedVideos}
               status="Approved"
@@ -208,7 +236,10 @@ export default async function DashboardPage() {
             />
           </TabsContent>
 
-          <TabsContent value="pending">
+          <TabsContent
+            value="pending"
+            className="data-[state=active]:animate-in data-[state=active]:fade-in-0 data-[state=active]:duration-300"
+          >
             <VideoGrid
               videos={pendingVideos}
               status="Pending"
@@ -217,8 +248,11 @@ export default async function DashboardPage() {
             />
           </TabsContent>
 
-          <TabsContent value="trash">
-            <p className="text-xs text-zinc-500">
+          <TabsContent
+            value="trash"
+            className="data-[state=active]:animate-in data-[state=active]:fade-in-0 data-[state=active]:duration-300"
+          >
+            <p className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.02] px-4 py-2.5 text-xs text-zinc-500">
               Videos in trash are permanently deleted after 30 days or when the trash
               exceeds 10 items.
             </p>

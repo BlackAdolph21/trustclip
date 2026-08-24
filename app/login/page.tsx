@@ -194,10 +194,10 @@ function LoginForm() {
         <BrandMark />
       </div>
 
-      <Card className="w-full max-w-md rounded-3xl border border-white/10 bg-white/[0.03] shadow-none ring-0 [--card-spacing:--spacing(10)]">
+      <Card className="animate-in fade-in-0 zoom-in-95 w-full max-w-md rounded-3xl border border-white/10 bg-white/[0.03] shadow-none ring-0 duration-300 [--card-spacing:--spacing(10)]">
         <CardContent className="flex flex-col gap-6">
           {signUpComplete ? (
-            <div className="flex flex-col items-center gap-4 py-4 text-center">
+            <div className="animate-in fade-in-0 flex flex-col items-center gap-4 py-4 text-center duration-300">
               <div className="flex size-14 items-center justify-center rounded-full bg-indigo-500/10 text-indigo-300">
                 <MailCheck className="size-6" />
               </div>
@@ -216,14 +216,14 @@ function LoginForm() {
                 type="button"
                 variant="outline"
                 size="lg"
-                className="mt-2 w-full border-white/15 bg-transparent text-slate-100 hover:bg-white/5"
+                className="mt-2 w-full"
                 onClick={backToLogin}
               >
                 Back to Log In
               </Button>
             </div>
           ) : resetEmailSent ? (
-            <div className="flex flex-col items-center gap-4 py-4 text-center">
+            <div className="animate-in fade-in-0 flex flex-col items-center gap-4 py-4 text-center duration-300">
               <div className="flex size-14 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-300">
                 <ShieldCheck className="size-6" />
               </div>
@@ -240,7 +240,7 @@ function LoginForm() {
                 type="button"
                 variant="outline"
                 size="lg"
-                className="mt-2 w-full border-white/15 bg-transparent text-slate-100 hover:bg-white/5"
+                className="mt-2 w-full"
                 onClick={backToLogin}
               >
                 Back to Log In
@@ -295,13 +295,17 @@ function LoginForm() {
               </div>
 
               {error && (
-                <div className="flex items-start gap-2.5 rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-400">
+                <div className="animate-in fade-in-0 slide-in-from-top-1 flex items-start gap-2.5 rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-400 duration-200">
                   <CircleAlert className="mt-0.5 size-4 shrink-0" />
                   <p>{error}</p>
                 </div>
               )}
 
-              <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+              <form
+                key={view}
+                className="animate-in fade-in-0 flex flex-col gap-4 duration-300"
+                onSubmit={handleSubmit}
+              >
                 {view === "signup" && (
                   <>
                     <div className="space-y-2">
@@ -463,7 +467,7 @@ function LoginForm() {
                   <button
                     type="button"
                     onClick={() => switchView("forgot_password")}
-                    className="text-center text-sm font-medium text-slate-400 hover:text-slate-200"
+                    className="text-center text-sm font-medium text-slate-400 transition-colors hover:text-slate-200"
                   >
                     Forgot password?
                   </button>
@@ -477,7 +481,7 @@ function LoginForm() {
                     <button
                       type="button"
                       onClick={() => switchView("login")}
-                      className="font-medium text-slate-300 hover:text-slate-50"
+                      className="font-medium text-slate-300 transition-colors hover:text-slate-50"
                     >
                       Log in
                     </button>
@@ -488,7 +492,7 @@ function LoginForm() {
                     <button
                       type="button"
                       onClick={() => switchView("login")}
-                      className="font-medium text-slate-300 hover:text-slate-50"
+                      className="font-medium text-slate-300 transition-colors hover:text-slate-50"
                     >
                       Log in
                     </button>
@@ -499,7 +503,7 @@ function LoginForm() {
                     <button
                       type="button"
                       onClick={() => switchView("signup")}
-                      className="font-medium text-slate-300 hover:text-slate-50"
+                      className="font-medium text-slate-300 transition-colors hover:text-slate-50"
                     >
                       Sign up
                     </button>

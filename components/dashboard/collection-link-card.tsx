@@ -45,14 +45,14 @@ export function CollectionLinkCard({ url }: CollectionLinkCardProps) {
           <Button
             type="button"
             variant="outline"
-            className="border-white/15 bg-transparent text-zinc-100 hover:bg-white/5 sm:w-40"
+            className="sm:w-40"
             onClick={handleCopy}
           >
             {isCopied ? (
-              <>
+              <span className="animate-in fade-in-0 zoom-in-95 flex items-center gap-1.5 text-emerald-400 duration-200">
                 <Check className="size-4" />
                 Copied!
-              </>
+              </span>
             ) : (
               <>
                 <Copy className="size-4" />
