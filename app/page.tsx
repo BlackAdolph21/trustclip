@@ -17,6 +17,7 @@ import {
   Star,
 } from "lucide-react";
 
+import { FeedbackForm } from "@/components/marketing/feedback-form";
 import { ProductJourney } from "@/components/marketing/product-journey";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { Badge } from "@/components/ui/badge";
@@ -354,6 +355,8 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        <FeedbackForm />
       </main>
 
       <footer className="border-t border-white/10 px-4 py-12 sm:px-6">
